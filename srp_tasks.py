@@ -37,20 +37,22 @@ class FileTaskStorage(TaskStorage):
 
 
 class Task:
-   def __init__(self, task_id, description, due_date=None, completed=False):
-       self.id = task_id
-       self.description = description
-       self.due_date = due_date
-       self.completed = completed
+    def __init__(self, task_id, description, due_date=None, completed=False, priority="medium"):
+        self.id = task_id
+        self.description = description
+        self.due_date = due_date
+        self.completed = completed
+        self.priority = priority  # เพิ่ม attribute priority
 
-   def mark_completed(self):
-       self.completed = True
-       print(f"Task {self.id} '{self.description}' marked as completed.")
+    def mark_completed(self):
+        self.completed = True
+        print(f"Task {self.id} '{self.description}' marked as completed.")
 
-   def __str__(self):
-       status = "✓" if self.completed else " "
-       due = f" (Due: {self.due_date})" if self.due_date else ""
-       return f"[{status}] {self.id}. {self.description}{due}"
+    def __str__(self):
+        status = "✓" if self.completed else " "
+        due = f" (Due: {self.due_date})" if self.due_date else ""
+        return f"[{status}] {self.id}. {self.description}{due} [Priority: {self.priority}]"
+
 
 # oop_tasks.py (ต่อจาก Class Task)
 
@@ -61,13 +63,14 @@ class TaskManager:
        self.next_id = max([t.id for t in self.tasks] + [0]) + 1 if self.tasks else 1
        print(f"Loaded {len(self.tasks)} tasks. Next ID: {self.next_id}")
 
-    def add_task(self, description, due_date=None):
-        task = Task(self.next_id, description, due_date)
+    def add_task(self, description, due_date=None, priority="medium"):
+        task = Task(self.next_id, description, due_date, priority=priority)  # ส่งค่า priority เข้า Task
         self.tasks.append(task)
         self.next_id += 1
-        self.storage.save_tasks(self.tasks) # Save after adding
-        print(f"Task '{description}' added.")
+        self.storage.save_tasks(self.tasks)  # Save หลังเพิ่ม
+        print(f"Task '{description}' added with priority '{priority}'.")
         return task
+
 
     def list_tasks(self):
        print("\n--- Current Tasks ---")
