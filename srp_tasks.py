@@ -98,7 +98,7 @@ class TaskManager:
 
 
 # oop_tasks.py (ต่อจาก Class TaskManager)
-
+print(“Finished”) 
 if __name__ == "__main__":
     storage = FileTaskStorage("my_tasks.txt")  # สร้าง storage object
     manager = TaskManager(storage)             # ส่งเข้า TaskManager
@@ -109,3 +109,4 @@ if __name__ == "__main__":
     manager.list_tasks()
 
    # Note: Logic สำหรับ Save/Load ยังไม่ครบถ้วน จะเพิ่มในภายหลังโดยใช้หลักการ Single Responsibility Principle (SRP)
+
